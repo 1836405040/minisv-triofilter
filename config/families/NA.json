@@ -1,0 +1,86 @@
+{
+  "reference": "/path/to/chm13v2.0.fa",
+  "minimum_variant_length": 30,
+  "confidence_policy": "strict",
+  "parent_readability_policy": "marker_assisted",
+  "father": {
+    "sample": "NA12877",
+    "bam": "/path/to/NA12877.bam"
+  },
+  "mother": {
+    "sample": "NA12878",
+    "bam": "/path/to/NA12878.bam"
+  },
+  "trgt_directory": "/path/to/trgt",
+  "parent_assemblies": [
+    "/path/to/NA12877.hap1.fa",
+    "/path/to/NA12877.hap2.fa",
+    "/path/to/NA12878.hap1.fa",
+    "/path/to/NA12878.hap2.fa"
+  ],
+  "parent_haplotype_alignments": {
+    "F0": {
+      "fasta": "/path/to/NA12877.hap1.fa",
+      "paf": "/path/to/NA12877.hap1.paf"
+    },
+    "F1": {
+      "fasta": "/path/to/NA12877.hap2.fa",
+      "paf": "/path/to/NA12877.hap2.paf"
+    },
+    "M0": {
+      "fasta": "/path/to/NA12878.hap1.fa",
+      "paf": "/path/to/NA12878.hap1.paf"
+    },
+    "M1": {
+      "fasta": "/path/to/NA12878.hap2.fa",
+      "paf": "/path/to/NA12878.hap2.paf"
+    }
+  },
+  "children": [
+    {
+      "sample": "NA12879",
+      "bam": "/path/to/NA12879.bam",
+      "candidate_vcfs": [
+        "/path/to/NA12879.sniffles.vcf",
+        "/path/to/NA12879.longcallD.vcf"
+      ],
+      "trgt_signal": "/path/to/NA12879.trgt_denovo.tsv"
+    },
+    {
+      "sample": "NA12881",
+      "bam": "/path/to/NA12881.bam",
+      "candidate_vcfs": [
+        "/path/to/NA12881.sniffles.vcf",
+        "/path/to/NA12881.longcallD.vcf"
+      ],
+      "trgt_signal": "/path/to/NA12881.trgt_denovo.tsv"
+    },
+    {
+      "sample": "NA12882",
+      "bam": "/path/to/NA12882.bam",
+      "candidate_vcfs": [
+        "/path/to/NA12882.sniffles.vcf",
+        "/path/to/NA12882.longcallD.vcf"
+      ],
+      "trgt_signal": "/path/to/NA12882.trgt_denovo.tsv"
+    },
+    {
+      "sample": "NA12885",
+      "bam": "/path/to/NA12885.bam",
+      "candidate_vcfs": [
+        "/path/to/NA12885.sniffles.vcf",
+        "/path/to/NA12885.longcallD.vcf"
+      ],
+      "trgt_signal": "/path/to/NA12885.trgt_denovo.tsv"
+    },
+    {
+      "sample": "NA12886",
+      "bam": "/path/to/NA12886.bam",
+      "candidate_vcfs": [
+        "/path/to/NA12886.sniffles.vcf",
+        "/path/to/NA12886.longcallD.vcf"
+      ],
+      "trgt_signal": "/path/to/NA12886.trgt_denovo.tsv"
+    }
+  ]
+}
