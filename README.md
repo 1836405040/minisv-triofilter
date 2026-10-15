@@ -145,3 +145,19 @@ unresolved records in `calls/structural_unresolved.jsonl`. These experimental
 models do not automatically assign high confidence. The diagnostic benchmark
 currently supports INS/DEL only and explicitly reports unsupported structural
 event IDs and truth rows instead of treating them as misses or false positives.
+
+## Structural review v1
+
+The pinned tool includes F09 strict confidence gates and F10 parental topology
+review. The default structural confidence policy is `audit`. Set
+`structural_confidence_policy: strict_v1` in the family JSON manifest only to
+opt into experimental strict candidate classification. Existing INS/DEL policy
+is unchanged.
+
+The fixed processing order is normalization and region audit, child junction
+sequence and split-topology checks, parental target-topology and phased-callability
+checks, duplication dosage or BND mate checks, sibling review, and classification.
+`calls/parent_topology_reviewed.jsonl` retains parental molecule evidence; summary
+counts distinguish full, partial, sequence-only, unobserved and incomplete states.
+An unresolved parental target remains blocking. No automatic locus rescue is
+launched. Independent real-positive calibration remains outstanding.
