@@ -24,3 +24,6 @@ Additional structural review features:
 |---|---|---|
 | F07 | [Fork #6](https://github.com/1836405040/minisv.py/pull/6) | Structural retention and interval lengths |
 | F08 | [Fork #7](https://github.com/1836405040/minisv.py/pull/7) | INV/DUP/BND junction review |
+
+| F09 | [Fork #8](https://github.com/1836405040/minisv.py/pull/8) | Optional strict structural confidence gates |
+| F10 | [Fork #9](https://github.com/1836405040/minisv.py/pull/9) | Integrated parental topology classification and audit |

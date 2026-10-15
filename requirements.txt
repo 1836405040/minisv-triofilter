@@ -1,4 +1,4 @@
 snakemake==8.30.0
 pytest==8.3.5
 PyYAML==6.0.2
-minisv @ git+https://github.com/1836405040/minisv.py.git@e4119fafa1e839c42d93327ead9ac91de2ac1bfc
+minisv @ git+https://github.com/1836405040/minisv.py.git@c30caca25111a7f11ba02e9e2860eff3cd68b8dd
