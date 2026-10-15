@@ -34,6 +34,8 @@ def manifest_assets(manifest):
     paths=[manifest,Path(c['reference']),Path(c['reference']+'.fai')]
     for member in [c['father'],c['mother'],*c['children']]:
         bam=Path(member['bam']);paths.extend([bam,Path(str(bam)+'.bai') if Path(str(bam)+'.bai').exists() else bam.with_suffix('.bai')])
+    if c.get('structural_exclude_bed'):
+        paths.append(Path(c['structural_exclude_bed']))
     for path in c.get('parent_assemblies',[]):
         paths.append(Path(path))
     for spec in c.get('parent_haplotype_alignments',{}).values():

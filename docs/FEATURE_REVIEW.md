@@ -17,3 +17,10 @@ after predecessors merge upstream, rebase and retarget subsequent work upstream.
 The locked tool commit is a review snapshot, not an upstream release. CI checks
 each published PR; merging and release remain review decisions. This workflow
 repository has its own feature PR and contains no copied calling implementation.
+
+Additional structural review features:
+
+| Feature | PR | Scope |
+|---|---|---|
+| F07 | [Fork #6](https://github.com/1836405040/minisv.py/pull/6) | Structural retention and interval lengths |
+| F08 | [Fork #7](https://github.com/1836405040/minisv.py/pull/7) | INV/DUP/BND junction review |

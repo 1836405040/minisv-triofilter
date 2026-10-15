@@ -132,3 +132,16 @@ as CI artifacts. No NA/HG002 BAMs, read names or private server paths are stored
 Changes use feature branches and PRs. Algorithm features belong to the
 upstream-derived tool fork; workflow/analysis changes belong here. See
 [the feature review map](docs/FEATURE_REVIEW.md). No PR is automatically merged.
+
+## Structural candidate review
+
+The pinned tool includes automatic INV/DUP/BND junction review in the family
+pipeline. Supply original caller VCFs to recover types removed by older input
+adapters. Set `structural_exclude_bed` in the family manifest to exclude
+centromeric intervals; the mask is tracked as an input dependency.
+
+Structural evidence is retained in `calls/structural_reviewed.jsonl` and
+unresolved records in `calls/structural_unresolved.jsonl`. These experimental
+models do not automatically assign high confidence. The diagnostic benchmark
+currently supports INS/DEL only and explicitly reports unsupported structural
+event IDs and truth rows instead of treating them as misses or false positives.
