@@ -29,7 +29,7 @@ mappy==2.31
 markdown-it-py==4.2.0
 MarkupSafe==3.0.4
 mdurl==0.1.2
-minisv @ git+https://github.com/1836405040/minisv.py.git@10639ed367d88e59c65e94bcffbc8ba44c828696
+minisv @ git+https://github.com/1836405040/minisv.py.git@e4119fafa1e839c42d93327ead9ac91de2ac1bfc
 nbformat==5.11.1
 numpy==2.5.4
 packaging==26.3

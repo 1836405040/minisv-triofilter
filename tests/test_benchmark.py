@@ -22,3 +22,12 @@ def test_insertion_boundary_is_masked_as_one_base():
     t=row(truth_id='a',start=300,end=300)
     e=row(event_id='e',start=300,end=300)
     assert evaluate([t],[e],[('chr1',300,301)])['truth_in_scope']==0
+
+
+def test_structural_null_delta_is_explicit_not_an_indel_miss():
+    truth=row(truth_id='struct',type='BND',delta=None,basis='REFERENCE_JUNCTION')
+    event=row(event_id='bnd',type='BND',delta=None,basis='REFERENCE_JUNCTION')
+    result=evaluate([truth],[event],[])
+    assert result['unsupported_event_ids']==['bnd']
+    assert result['truth_in_scope']==0
+    assert result['rows'][0]['assessment_status']=='UNSUPPORTED_STRUCTURAL_BENCHMARK'
