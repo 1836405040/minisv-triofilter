@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.snakemake/
+results/
+logs/
+demo/
+data/
+*.bam
+*.bai
+*.cram
+*.fastq*
+*.fq*
