@@ -1,0 +1,17 @@
+# Paths are resolved from the directory where snakemake is invoked.
+runs:
+  hg002_indel_sv:
+    manifest: config/families/HG002.json
+    minimum_variant_length: 30
+    error_rate: 0.08
+    parent_readability_policy: marker_assisted
+    threads: 16
+    mem_mb: 64000
+# Add a mapped truth TSV under benchmarks only after discovery is configured.
+# benchmarks:
+#   hg002_indel_sv:
+#     truth: /path/to/CHM13_mapped_truth.tsv
+#     mask: /path/to/chm13v2.cen-mask.bed
+#     position_tolerance: 100
+#     length_ratio: 0.5
+# The benchmark is diagnostic compatibility, not sequence-validated TP/FP.

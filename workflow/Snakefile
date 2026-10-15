@@ -1,0 +1,73 @@
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(workflow.basedir).parent / 'scripts'))
+from workflow_support import validate_runs, manifest_assets
+
+RUNS=validate_runs(config)
+BENCH=config.get('benchmarks',{})
+ROOT=str(Path(workflow.basedir).parent)
+
+rule all:
+    input:
+        expand('results/{run}/summary.tsv',run=RUNS),
+        expand('results/{run}/events.tsv',run=RUNS)
+
+rule benchmark_all:
+    input:
+        expand('results/{run}/benchmark.json',run=BENCH)
+
+rule preflight:
+    input:
+        assets=lambda wc: manifest_assets(RUNS[wc.run]['manifest']),
+        lock=ROOT+'/config/tool.lock.json'
+    output:
+        'results/{run}/provenance.inputs.json'
+    params:
+        manifest=lambda wc: RUNS[wc.run]['manifest'],
+        script=ROOT+'/scripts/preflight.py'
+    log: 'logs/{run}/preflight.log'
+    shell:
+        'python {params.script:q} --manifest {params.manifest:q} --lock {input.lock:q} --output {output:q} > {log:q} 2>&1'
+
+rule family:
+    input:
+        provenance='results/{run}/provenance.inputs.json'
+    output:
+        directory('results/{run}/calls')
+    threads: lambda wc: RUNS[wc.run].get('threads',16)
+    resources:
+        mem_mb=lambda wc: RUNS[wc.run].get('mem_mb',64000)
+    params:
+        manifest=lambda wc: RUNS[wc.run]['manifest'],
+        minimum=lambda wc: RUNS[wc.run].get('minimum_variant_length',50),
+        rate=lambda wc: RUNS[wc.run].get('error_rate',.08),
+        policy=lambda wc: RUNS[wc.run].get('parent_readability_policy','marker_assisted'),
+        script=ROOT+'/scripts/run_family.py'
+    log: 'logs/{run}/family.log'
+    benchmark: 'logs/{run}/resources.tsv'
+    shell:
+        'python {params.script:q} --manifest {params.manifest:q} --output {output:q} --minimum {params.minimum} --rate {params.rate} --policy {params.policy:q} --threads {threads} > {log:q} 2>&1'
+
+rule export:
+    input: calls='results/{run}/calls'
+    output: 'results/{run}/events.tsv'
+    shell: 'minisv denovo export --input {input.calls:q}/all_reviewed.jsonl --output {output:q}'
+
+rule summarize:
+    input: calls='results/{run}/calls'
+    output: 'results/{run}/summary.tsv'
+    params: script=ROOT+'/scripts/summarize.py'
+    shell: 'python {params.script:q} --input {input.calls:q}/all_reviewed.jsonl --output {output:q}'
+
+rule benchmark:
+    input:
+        calls='results/{run}/calls',
+        truth=lambda wc: BENCH[wc.run]['truth'],
+        mask=lambda wc: BENCH[wc.run]['mask']
+    output: 'results/{run}/benchmark.json'
+    params:
+        script=ROOT+'/scripts/benchmark.py',
+        tolerance=lambda wc: BENCH[wc.run].get('position_tolerance',100),
+        ratio=lambda wc: BENCH[wc.run].get('length_ratio',.5)
+    shell:
+        'python {params.script:q} --events {input.calls:q}/all_reviewed.jsonl --truth {input.truth:q} --mask {input.mask:q} --output {output:q} --tolerance {params.tolerance} --ratio {params.ratio}'

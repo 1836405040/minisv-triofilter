@@ -1,0 +1,46 @@
+name: Workflow tests
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pytest==8.3.5
+      - run: python -m pytest tests/test_config.py tests/test_benchmark.py -q
+      - run: bash -n scripts/run.sh
+  integration:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned tools
+        run: |
+          python -m pip install -r requirements.lock.txt
+          curl -fL --retry 3 https://github.com/lh3/minimap2/releases/download/v2.31/minimap2-2.31_x64-linux.tar.bz2 -o /tmp/mm2.tar.bz2
+          tar -xjf /tmp/mm2.tar.bz2 -C /tmp
+          sudo install /tmp/minimap2-2.31_x64-linux/minimap2 /usr/local/bin/minimap2
+      - run: python tests/make_demo.py
+      - name: Dry run, execute discovery and benchmark
+        run: |
+          bash scripts/run.sh demo/config.yaml --dry-run
+          bash scripts/run.sh demo/config.yaml
+          bash scripts/run.sh demo/config.yaml benchmark_all
+          python tests/check_demo.py
+      - name: Check completed workflow does not rerun
+        run: |
+          bash scripts/run.sh demo/config.yaml --dry-run 2>&1 | tee /tmp/resume.log
+          grep -q 'Nothing to be done' /tmp/resume.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: synthetic-workflow-evidence
+          path: |
+            logs/
+            results/

@@ -1,0 +1,50 @@
+{
+  "reference": "/path/to/chm13v2.0.fa",
+  "minimum_variant_length": 30,
+  "confidence_policy": "strict",
+  "parent_readability_policy": "marker_assisted",
+  "father": {
+    "sample": "HG003",
+    "bam": "/path/to/HG003.bam"
+  },
+  "mother": {
+    "sample": "HG004",
+    "bam": "/path/to/HG004.bam"
+  },
+  "trgt_directory": "/path/to/trgt",
+  "parent_assemblies": [
+    "/path/to/HG003.hap1.fa",
+    "/path/to/HG003.hap2.fa",
+    "/path/to/HG004.hap1.fa",
+    "/path/to/HG004.hap2.fa"
+  ],
+  "parent_haplotype_alignments": {
+    "F0": {
+      "fasta": "/path/to/HG003.hap1.fa",
+      "paf": "/path/to/HG003.hap1.paf"
+    },
+    "F1": {
+      "fasta": "/path/to/HG003.hap2.fa",
+      "paf": "/path/to/HG003.hap2.paf"
+    },
+    "M0": {
+      "fasta": "/path/to/HG004.hap1.fa",
+      "paf": "/path/to/HG004.hap1.paf"
+    },
+    "M1": {
+      "fasta": "/path/to/HG004.hap2.fa",
+      "paf": "/path/to/HG004.hap2.paf"
+    }
+  },
+  "children": [
+    {
+      "sample": "HG002",
+      "bam": "/path/to/HG002.bam",
+      "candidate_vcfs": [
+        "/path/to/HG002.sniffles.vcf",
+        "/path/to/HG002.longcallD.vcf"
+      ],
+      "trgt_signal": "/path/to/HG002.trgt_denovo.tsv"
+    }
+  ]
+}
