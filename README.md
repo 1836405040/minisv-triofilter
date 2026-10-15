@@ -18,13 +18,14 @@ cd minisv-triofilter
 git switch feature/reproducible-trio-workflow
 python3.12 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
+python -m pip install -r requirements.lock.txt
 curl -fL --retry 3 https://github.com/lh3/minimap2/releases/download/v2.31/minimap2-2.31_x64-linux.tar.bz2 -o /tmp/minimap2.tar.bz2
 tar -xjf /tmp/minimap2.tar.bz2 -C /tmp
 install /tmp/minimap2-2.31_x64-linux/minimap2 .venv/bin/minimap2
 ```
 
-The dependency file pins the Minisv Git commit and workflow packages.
+`requirements.txt` records direct dependencies; `requirements.lock.txt` pins
+the complete Linux/Python 3.12 environment resolved in the passing CI run.
 Preflight verifies the installed tool commit and minimap2 version, hashes every
 declared data input, and saves the resolved Python environment. Hashing large
 BAMs is deliberately a separate cached rule. Archive that environment with a

@@ -22,7 +22,7 @@ jobs:
           python-version: '3.12'
       - name: Install pinned tools
         run: |
-          python -m pip install -r requirements.txt
+          python -m pip install -r requirements.lock.txt
           curl -fL --retry 3 https://github.com/lh3/minimap2/releases/download/v2.31/minimap2-2.31_x64-linux.tar.bz2 -o /tmp/mm2.tar.bz2
           tar -xjf /tmp/mm2.tar.bz2 -C /tmp
           sudo install /tmp/minimap2-2.31_x64-linux/minimap2 /usr/local/bin/minimap2
